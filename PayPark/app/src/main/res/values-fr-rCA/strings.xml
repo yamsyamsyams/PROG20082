@@ -1,14 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PayPark</string>
-    <string name="sign_in">Sign In</string>
-    <string name="sign_up">Sign Up</string>
+
+    <string name="sign_in">Se connecter</string>
+    <string name="sign_up">S \'inscrire</string>
     <string name="save">Save</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
+    <string name="password">Mot de passe</string>
     <string name="confirmPassword">Confirm Password</string>
-    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password">Mot de passe oublie?</string>
     <string name="remember_me">Remember Me</string>
-    <string name="create_account">Create Account</string>
+    <string name="create_account">Creer un compte</string>
 
     <string name="name">Name</string>
     <string name="nameCard">Name On Card</string>
@@ -25,5 +27,4 @@
         <item>Male</item>
         <item>No Disclosure</item>
     </string-array>
-
 </resources>
