@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.view.isEmpty
 import com.example.paypark.model.User
 import com.example.paypark.utils.DataValidations
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -91,6 +92,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             edtName.error = "Please enter name"
             return false
         }
+
         if (edtEmail.text.toString().isEmpty()){
             edtEmail.error = "Email cannot be empty"
             return false
@@ -99,6 +101,60 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             return false
         }
 
+        if(edtPhoneNumber.text.toString().isEmpty()){
+            edtPhoneNumber.error = "Phone number cannot be empty"
+            return false
+        }
+        else if(edtPhoneNumber.text.toString().length > 10){
+            edtPhoneNumber.error = "Please enter valid phone number length"
+            return false
+        }
+
+        if(edtPlateNumber.text.toString().isEmpty()){
+            edtPlateNumber.error = "Plate number cannot be blank"
+            return false
+        }
+        else if(edtPlateNumber.text.toString().length > 7){
+            edtPlateNumber.error = "Plate number must be less than 7 characters"
+            return false
+        }
+
+        if(edtCardNumber.text.toString().isEmpty()){
+            edtCardNumber.error = "Card number is required"
+            return false
+        }
+        else if(edtCardNumber.text.toString().length != 16){
+            edtCardNumber.error = "Card number length invalid"
+            return false
+        }
+
+        if(edtCardName.text.toString().isEmpty()){
+            edtCardName.error = "Name of owner of card required"
+            return false
+        }
+
+        if(edtCVV.text.toString().isEmpty()){
+            edtCVV.error = "CVV security code required"
+            return false
+        }
+        else if(edtCVV.text.toString().length != 3){
+            edtCVV.error = "Invalid CVV length"
+            return false
+        }
+
+        if(edtPassword.text.toString().isEmpty()){
+            edtPassword.error = "Password cannot be empty"
+            return false
+        }
+        else if(edtPassword.text.toString().length < 8){
+            edtPassword.error = "Password must be at least 8 characters long"
+            return false
+        }
+
+        if(spnGender.toString().isEmpty()){
+            tvGender.error = "Please select a gender"
+            return false
+        }
         //take home - add errors and data validations for the remaining inputs
 
         return true
