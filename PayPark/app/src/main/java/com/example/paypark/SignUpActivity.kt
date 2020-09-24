@@ -104,6 +104,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
         // open MainActivity and pass the user object
         val mainIntent = Intent(this, MainActivity::class.java)
+        mainIntent.putExtra("com.example.paypark.EXTRA_MAIL", user.email)
         startActivity(mainIntent)
     }
 
