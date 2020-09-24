@@ -1,20 +1,26 @@
 package com.example.paypark
 
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import androidx.core.view.isEmpty
+import androidx.fragment.app.DialogFragment
 import com.example.paypark.model.User
 import com.example.paypark.utils.DataValidations
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     val TAG: String = this@SignUpActivity.toString()
-
     var selectedGender: String = ""
     lateinit var user: User
 
@@ -40,6 +46,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         btnSignUp.setOnClickListener(this)
+
+        edtExpiry.isFocusable = false
         edtExpiry.setOnClickListener(this) // display the datePicker
 
     }
@@ -64,6 +72,10 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
                 edtExpiry.id -> {
+                    // show the fragment for date picker
+
+                    val dpFragment = DatePickerFragment()
+                    dpFragment.show(supportFragmentManager, "datepicker")
                 }
             }
         }
@@ -79,12 +91,20 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         user.creditCardNumber = edtCardNumber.text.toString()
         user.nameOnCard = edtCardName.text.toString()
         user.cvv = edtCVV.text.toString().toInt()
-        user.password = edtPassword.text.toString()
         user.gender = selectedGender
+        user.password = DataValidations().encryptPassword(edtPassword.text.toString())
 
-//        user.expiryDate
-        Log.d(TAG, user.toString())
+        user.expiryDate = Date()
 
+        Log.d(TAG, "email: " + user.email.toString())
+        Log.d(TAG, "password: " + user.password.toString())
+        Log.d(TAG, "encrypted password: " + user.password.toString())
+        Log.d(TAG, "gender: " + user.gender)
+        Log.d(TAG, "cvv: " + user.cvv)
+
+        // open MainActivity and pass the user object
+        val mainIntent = Intent(this, MainActivity::class.java)
+        startActivity(mainIntent)
     }
 
     fun validateData(): Boolean {
@@ -101,12 +121,17 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             return false
         }
 
+        if(spnGender.toString().isEmpty()){
+            tvGender.error = "Please select a gender"
+            return false
+        }
+
         if(edtPhoneNumber.text.toString().isEmpty()){
             edtPhoneNumber.error = "Phone number cannot be empty"
             return false
         }
-        else if(edtPhoneNumber.text.toString().length > 10){
-            edtPhoneNumber.error = "Please enter valid phone number length"
+        else if(!DataValidations().validatePhoneNumber(edtPhoneNumber.text.toString())){
+            edtPhoneNumber.error = "Please enter valid phone number"
             return false
         }
 
@@ -116,6 +141,21 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         }
         else if(edtPlateNumber.text.toString().length > 7){
             edtPlateNumber.error = "Plate number must be less than 7 characters"
+            return false
+        }
+
+        if(edtPassword.text.toString().isEmpty()){
+            edtPassword.error = getString(R.string.error_empty_password)
+            return false
+        }
+        if(!edtPassword.text.toString().equals(edtConfirmPassword.text.toString())){
+            edtPassword.error = "Passwords do not match"
+            edtConfirmPassword.error = "Passwords do not match"
+            return false
+        }
+
+        if(edtConfirmPassword.text.toString().isEmpty()){
+            edtConfirmPassword.error = "Confirm password cannot be empty"
             return false
         }
 
@@ -141,22 +181,37 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             edtCVV.error = "Invalid CVV length"
             return false
         }
-
-        if(edtPassword.text.toString().isEmpty()){
-            edtPassword.error = "Password cannot be empty"
-            return false
-        }
-        else if(edtPassword.text.toString().length < 8){
-            edtPassword.error = "Password must be at least 8 characters long"
-            return false
-        }
-
-        if(spnGender.toString().isEmpty()){
-            tvGender.error = "Please select a gender"
-            return false
-        }
         //take home - add errors and data validations for the remaining inputs
 
         return true
+    }
+
+    // removed inner keyword from class declaration
+    class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener{
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+            // use the current date as the default date
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            return DatePickerDialog(this.requireActivity(), this, year, month, day)
+        }
+
+        override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
+            // TODO for the operation to be performed on the date selected by the user
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, dayOfMonth)
+            val expiryDate = calendar.time
+
+//            this@SignUpActivity.user.expiryDate = expiryDate
+
+            Log.d(this.requireActivity().toString(), "Date : " + expiryDate)
+
+            val sdf = SimpleDateFormat("MM/YY")
+            this.requireActivity().edtExpiry.setText(sdf.format(expiryDate).toString())
+        }
     }
 }

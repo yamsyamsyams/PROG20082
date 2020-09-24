@@ -22,6 +22,8 @@
     <string name="expiry">MM/YY</string>
     <string name="gender">Gender</string>
 
+    <string name="error_empty_password">Le mot de passe ne peut pas être vide</string>
+
     <string-array name="gender_array">
         <item>Female</item>
         <item>Male</item>
