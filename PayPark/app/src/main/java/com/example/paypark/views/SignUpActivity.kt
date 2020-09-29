@@ -1,4 +1,4 @@
-package com.example.paypark
+package com.example.paypark.views
 
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -10,8 +10,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import androidx.core.view.isEmpty
 import androidx.fragment.app.DialogFragment
+import com.example.paypark.R
 import com.example.paypark.model.User
 import com.example.paypark.utils.DataValidations
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -22,7 +22,12 @@ import java.util.*
 class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     val TAG: String = this@SignUpActivity.toString()
     var selectedGender: String = ""
-    lateinit var user: User
+//    lateinit var user: User
+
+    // python equivalent @staticmethod
+    companion object{
+        var user = User()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +67,15 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         spnGender.adapter = genderAdapter
     }
 
+    fun initialSetup(){
+        edtName.setAutofillHints(View.AUTOFILL_HINT_NAME)
+        edtEmail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS)
+        // shouldn't show autofill information for Credit Card number, avoid for security reasons
+        edtCardName.setAutofillHints(View.AUTOFILL_HINT_NAME)
+        edtPhoneNumber.setAutofillHints(View.AUTOFILL_HINT_PHONE)
+
+    }
+
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
@@ -69,6 +83,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     // gather all the data and create object of User class
                     if(this.validateData()){
                         this.fetchData()
+                        this.goToMain()
                     }
                 }
                 edtExpiry.id -> {
@@ -94,18 +109,26 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         user.gender = selectedGender
         user.password = DataValidations().encryptPassword(edtPassword.text.toString())
 
-        user.expiryDate = Date()
+//        user.expiryDate = Date()
 
         Log.d(TAG, "email: " + user.email.toString())
         Log.d(TAG, "password: " + user.password.toString())
         Log.d(TAG, "encrypted password: " + user.password.toString())
         Log.d(TAG, "gender: " + user.gender)
         Log.d(TAG, "cvv: " + user.cvv)
+    }
 
+    fun goToMain(){
         // open MainActivity and pass the user object
         val mainIntent = Intent(this, MainActivity::class.java)
-        mainIntent.putExtra("com.example.paypark.EXTRA_MAIL", user.email)
+//        mainIntent.putExtra("com.example.paypark.EXTRA_MAIL", user.email)
+        mainIntent.putExtra("com.example.paypark.EXTRA_USER", user)
         startActivity(mainIntent)
+
+        // remove the SignUpActivity from stack
+        this@SignUpActivity.finishAffinity()
+        //finishAndRemoveTask()
+        //finish() not recommended to use anywhere in the app
     }
 
     fun validateData(): Boolean {
@@ -208,6 +231,8 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
             val expiryDate = calendar.time
 
 //            this@SignUpActivity.user.expiryDate = expiryDate
+
+            user.expiryDate = expiryDate
 
             Log.d(this.requireActivity().toString(), "Date : " + expiryDate)
 
