@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.example.paypark.R
+import com.example.paypark.utils.DataValidations
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity(), View.OnClickListener {
+    val TAG : String = this@SignInActivity.toString()
     lateinit var tvCreateAccount: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,26 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun validateData() : Boolean{
+        if (edtEmail.text.isEmpty()){
+            edtEmail.setError("Email cannot be empty")
+            return false
+        }
+
+        if (edtPassword.text.isEmpty()){
+            edtPassword.setError("Password cannot be empty")
+            return false
+        }
+
+        if (!DataValidations().validateEmail(edtEmail.text.toString())){
+            edtEmail.setError("Please provide valid email address")
+            return false
+        }
+
+        return true
+    }
+
     private fun validateUser(){
         if(edtEmail.text.toString().equals("test") && edtPassword.text.toString().equals("test")){
             this.goToMain()

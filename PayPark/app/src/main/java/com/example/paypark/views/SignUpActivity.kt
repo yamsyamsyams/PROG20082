@@ -33,6 +33,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        this.initialSetup()
         this.intializeSpinner()
         selectedGender = resources.getStringArray(R.array.gender_array).get(0)
 
@@ -73,6 +74,13 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         // shouldn't show autofill information for Credit Card number, avoid for security reasons
         edtCardName.setAutofillHints(View.AUTOFILL_HINT_NAME)
         edtPhoneNumber.setAutofillHints(View.AUTOFILL_HINT_PHONE)
+        edtPassword.setText("jk123")
+        edtConfirmPassword.setText("jk123")
+        edtCVV.setText("123")
+        edtPlateNumber.setText("abcd123")
+        edtEmail.setText("jk@jk.com")
+        edtCardName.setText("JK")
+        edtCardNumber.setText("1234123412341234")
 
     }
 
@@ -105,24 +113,21 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         user.carPlate = edtPlateNumber.text.toString()
         user.creditCardNumber = edtCardNumber.text.toString()
         user.nameOnCard = edtCardName.text.toString()
-        user.cvv = edtCVV.text.toString().toInt()
+
+        if (edtCVV.text.toString().isNotEmpty()) {
+            user.cvv = edtCVV.text.toString().toInt()
+        }
         user.gender = selectedGender
         user.password = DataValidations().encryptPassword(edtPassword.text.toString())
 
 //        user.expiryDate = Date()
 
-        Log.d(TAG, "email: " + user.email.toString())
-        Log.d(TAG, "password: " + user.password.toString())
-        Log.d(TAG, "encrypted password: " + user.password.toString())
-        Log.d(TAG, "gender: " + user.gender)
-        Log.d(TAG, "cvv: " + user.cvv)
+        Log.d(TAG, "User : " + user.toString())
     }
 
     fun goToMain(){
         // open MainActivity and pass the user object
         val mainIntent = Intent(this, MainActivity::class.java)
-//        mainIntent.putExtra("com.example.paypark.EXTRA_MAIL", user.email)
-        mainIntent.putExtra("com.example.paypark.EXTRA_USER", user)
         startActivity(mainIntent)
 
         // remove the SignUpActivity from stack

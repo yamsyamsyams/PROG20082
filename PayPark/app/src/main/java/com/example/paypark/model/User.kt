@@ -33,3 +33,5 @@ data class User (
         Date()
     )
 }
+
+// TEXT, INTEGER, REAL, BLOB, UNDEFINED
