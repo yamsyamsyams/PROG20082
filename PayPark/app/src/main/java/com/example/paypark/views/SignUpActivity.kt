@@ -87,7 +87,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
-                btnSignUp.id -> {
+                btnSignUp.id -> { // btnSignUp aka Save info button at signup page
                     // gather all the data and create object of User class
                     if(this.validateData()){
                         this.fetchData()

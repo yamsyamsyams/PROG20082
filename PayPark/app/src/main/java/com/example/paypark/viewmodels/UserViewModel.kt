@@ -18,4 +18,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application){
         userRepo = UserRepository(userDao)
         allUsers = userRepo.allUsers
     }
+
+    /*
+    insertAll() method will create a new user record in the database
+     */
+    fun insertAll(user:User){}
 }
