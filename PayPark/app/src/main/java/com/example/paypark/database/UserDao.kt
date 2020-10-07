@@ -23,10 +23,9 @@ interface UserDao {
     @Query("SELECT * FROM Users")
     fun getAllUsers(): LiveData<List<User>>
 
-    @Query("SELECT * from Users WHERE email LIKE :email")
-    fun getUserByEmail(email:String) : User?
+    @Query("SELECT * FROM Users WHERE email LIKE :email")
+    fun getUserByEmail(email: String) : User?
 
-    @Query("SELECT * FROM Users WHERE email LIKE :email AND password LIKE :pw")
-    fun getUserByLoginInfo(email: String, pw: String) : User?
-
+    @Query("SELECT * FROM Users WHERE email LIKE :email AND password LIKE :pwd")
+    fun getUserByLoginInfo(email: String, pwd: String): User?
 }
