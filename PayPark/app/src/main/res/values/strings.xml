@@ -11,6 +11,10 @@
     <string name="remember_me">Remember Me</string>
     <string name="create_account">Create Account</string>
 
+    <string name="view_profile">View Profile</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="sign_out">Sign Out</string>
+
     <string name="name">Name</string>
     <string name="nameCard">Name On Card</string>
     <string name="phone">Phone Number</string>
@@ -28,5 +32,16 @@
         <item>Male</item>
         <item>No Disclosure</item>
     </string-array>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>

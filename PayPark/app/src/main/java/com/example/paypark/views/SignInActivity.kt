@@ -1,13 +1,16 @@
 package com.example.paypark.views
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.example.paypark.HomeActivity
 import com.example.paypark.R
+import com.example.paypark.managers.SharedPreferencesManager
 import com.example.paypark.utils.DataValidations
 import com.example.paypark.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -22,6 +25,9 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+        SharedPreferencesManager.init(applicationContext)
+        this.fetchPreferences()
+
         tvCreateAccount = findViewById(R.id.tvCreateAccount)
         tvCreateAccount.setOnClickListener(this)
 
@@ -29,6 +35,11 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
         userViewModel = UserViewModel(this.application)
         this.fetchAllUsers()
+    }
+
+    private fun fetchPreferences(){
+        edtEmail.setText(SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, ""))
+        edtPassword.setText(SharedPreferencesManager.read(SharedPreferencesManager.PASSWORD, ""))
     }
 
     override fun onClick(v: View?) {
@@ -67,11 +78,10 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         var email = edtEmail.text.toString()
         var password = DataValidations().encryptPassword(edtPassword.text.toString())
 
-
-
         userViewModel.getUserByLoginInfo(email, password)?.observe(this@SignInActivity, { matchedUser ->
             if(matchedUser != null){ // will be using it instead of matchedUser if we don't change
                 // valid login
+                this.checkRemember()
                 this@SignInActivity.finishAndRemoveTask()
                 this.goToMain()
             }
@@ -80,7 +90,6 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(this, "Incorrect Login/Password. Try again!", Toast.LENGTH_LONG).show() // Toast is a small message display
             }
         })
-
         /* test method, hard coded we should check from DB
         if (edtEmail.text.toString().equals("test@sh.ca")
             && edtPassword.text.toString().equals("test123")){
@@ -88,9 +97,24 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         }*/
     }
 
+    private fun checkRemember(){
+        if(swtRememberMe.isChecked){
+            // save the credentials in shared preferences
+            SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
+            SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
+        }
+        else{
+            SharedPreferencesManager.remove(SharedPreferencesManager.EMAIL)
+            SharedPreferencesManager.remove(SharedPreferencesManager.PASSWORD)
+        }
+    }
+
     private fun goToMain(){
-        val mainIntent = Intent(this, MainActivity::class.java)
-        startActivity(mainIntent)
+//        val mainIntent = Intent(this, MainActivity::class.java)
+//        startActivity(mainIntent)
+
+        val homeIntent = Intent(this, HomeActivity::class.java)
+        startActivity(homeIntent)
 
         //to not allow user to go back to SignInActivity when they press back button on MainActivity
         //finishAffinity() will remove current activity from Activity Stack
