@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.example.paypark.R
 import com.example.paypark.utils.DataValidations
 import com.example.paypark.viewmodels.UserViewModel
@@ -63,12 +64,28 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun validateUser(){
+        var email = edtEmail.text.toString()
+        var password = DataValidations().encryptPassword(edtPassword.text.toString())
 
+
+
+        userViewModel.getUserByLoginInfo(email, password)?.observe(this@SignInActivity, { matchedUser ->
+            if(matchedUser != null){ // will be using it instead of matchedUser if we don't change
+                // valid login
+                this@SignInActivity.finishAndRemoveTask()
+                this.goToMain()
+            }
+            else{
+                // invalid login
+                Toast.makeText(this, "Incorrect Login/Password. Try again!", Toast.LENGTH_LONG).show() // Toast is a small message display
+            }
+        })
+
+        /* test method, hard coded we should check from DB
         if (edtEmail.text.toString().equals("test@sh.ca")
             && edtPassword.text.toString().equals("test123")){
-
             this.goToMain()
-        }
+        }*/
     }
 
     private fun goToMain(){
@@ -87,16 +104,18 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun fetchAllUsers(){
-//        userViewModel.allUsers.observe(this@SignInActivity, {
-//            for(user in it){
-//                Log.d(TAG, user.toString())
-//            }
-//        })
+        userViewModel.allUsers.observe(this@SignInActivity, {
+            for(user in it){
+                Log.d(TAG, user.toString())
+            }
+            // show the data in UI
+            // call user defined methods
+        })
 
-        userViewModel.allUsers.observe(this@SignInActivity, { users ->
+        /*userViewModel.allUsers.observe(this@SignInActivity, { users ->
             for(user in users){
                 Log.d(TAG, user.toString())
             }
-        })
+        })*/
     }
 }
