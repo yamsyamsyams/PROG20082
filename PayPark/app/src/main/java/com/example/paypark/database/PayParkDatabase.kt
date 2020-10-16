@@ -33,7 +33,9 @@ abstract class PayParkDatabase : RoomDatabase(){
                     context.applicationContext,
                     PayParkDatabase::class.java,
                     R.string.database_name.toString()
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
 
                 INSTANCE = instance
                 return instance

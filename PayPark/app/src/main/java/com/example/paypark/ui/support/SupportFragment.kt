@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.example.paypark.R
 import com.example.paypark.managers.SharedPreferencesManager
 
 class SupportFragment : Fragment(), View.OnClickListener {
+
     lateinit var btnCall: Button
     lateinit var btnEmail: Button
     val REQUEST_CALL = 101
@@ -56,7 +58,7 @@ class SupportFragment : Fragment(), View.OnClickListener {
 
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:") //to indicate that only email apps should handle this
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("jigisha.sheridan@gmail.com"))
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("j.hoang2080@gmail.com"))
             putExtra(Intent.EXTRA_SUBJECT, "Support Request by " + user_email)
         }
 

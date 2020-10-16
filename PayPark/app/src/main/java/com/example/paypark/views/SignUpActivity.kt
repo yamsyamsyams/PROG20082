@@ -96,9 +96,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     if (this.validateData()) {
                         this.fetchData()
                         this.saveUserToDB()
-
                         SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
-
                         this.goToMain()
                     }
                 }
