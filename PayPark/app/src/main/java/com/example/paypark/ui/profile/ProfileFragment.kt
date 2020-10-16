@@ -49,6 +49,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     lateinit var userViewModel: UserViewModel
     lateinit var existingUser: User
     var currentUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
+   // var currentUserEmail = "jh3@jh.com"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +86,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         fabEditProfile = root.fabEditProfile
 
         this.disableEdit()
+       // this.populateProfile()
 
         return root
     }
@@ -130,14 +132,19 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     fun populateProfile(){
+//        Log.e("ProfileFragment", "populateProfile() executing")
+
         if (currentUserEmail != null){
+            Log.e("ProfileFragment", "currentUserEmail " + currentUserEmail)
             userViewModel.getUserByEmail(currentUserEmail!!)?.observe(this.requireActivity(), {matchedUser ->
+
+//                Log.e("Profile Fragment", "Matched user : " + matchedUser.phoneNumber)
 
                 if (matchedUser != null) {
 
                     this.existingUser = matchedUser
 
-                    Log.d("Profile Fragment", "Matched user : " + matchedUser.toString())
+//                    Log.d("Profile Fragment", "Matched user : " + matchedUser.toString())
 
                     edtName.setText(matchedUser.name)
                     edtPhoneNumber.setText(matchedUser.phoneNumber)

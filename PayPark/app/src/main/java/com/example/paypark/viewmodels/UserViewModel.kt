@@ -59,11 +59,11 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun getUserByEmailCoroutine(email: String) = viewModelScope.launch(Dispatchers.IO){
         val user: User? = userRepo.getUserByEmail(email)
+        matchedUser?.postValue(user)
     }
 
     fun getUserByEmail(email: String) : MutableLiveData<User>?{
         getUserByEmailCoroutine(email)
-
         Log.d("UserViewModel : ", matchedUser.toString())
         return matchedUser
     }
