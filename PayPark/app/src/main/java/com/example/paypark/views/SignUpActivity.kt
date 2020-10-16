@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import com.example.paypark.R
+import com.example.paypark.managers.SharedPreferencesManager
 import com.example.paypark.model.User
 import com.example.paypark.utils.DataValidations
 import com.example.paypark.viewmodels.UserViewModel
@@ -76,14 +77,14 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
         //the hardcoded values for each of these inputs
         // are just used to save time when we are testing this activity
-        edtName.setText("Jigisha Patel")
+        edtName.setText("James Hoang")
         edtPhoneNumber.setText("1234567890")
-        edtPassword.setText("jk123")
-        edtConfirmPassword.setText("jk123")
+        edtPassword.setText("123")
+        edtConfirmPassword.setText("123")
         edtCVV.setText("123")
         edtPlateNumber.setText("abcd123")
-        edtEmail.setText("jk@jk.com")
-        edtCardName.setText("JK")
+        edtEmail.setText("jh@jh.com")
+        edtCardName.setText("JH")
         edtCardNumber.setText("1234123412341234")
     }
 
@@ -95,6 +96,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     if (this.validateData()) {
                         this.fetchData()
                         this.saveUserToDB()
+
+                        SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
+
                         this.goToMain()
                     }
                 }

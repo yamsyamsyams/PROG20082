@@ -1,4 +1,4 @@
-package com.example.paypark
+package com.example.paypark.views
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,15 +17,17 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import com.example.paypark.R
 import com.example.paypark.managers.SharedPreferencesManager
 import com.example.paypark.viewmodels.UserViewModel
-import com.example.paypark.views.SignInActivity
-import com.example.paypark.views.SignUpActivity
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var userViewModel: UserViewModel
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +38,15 @@ class HomeActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+//        val fab: FloatingActionButton = findViewById(R.id.fab)
+//        fab.setOnClickListener { view ->
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
+//        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+
+        navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
@@ -63,15 +66,17 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.action_view_profile->{
-
+            R.id.action_view_profile ->{
+//                navController.navigate(R.id.action_nav_home_to_profileFragment)
+                navController.navigate(R.id.nav_profile)
             }
-            R.id.action_delete_account->{
+            R.id.action_delete_account ->{
                 val alertBuilder = AlertDialog.Builder(this)
+
                 alertBuilder.setTitle("Sad to see you go")
                 alertBuilder.setMessage("Are you sure you want to delete your account?")
                 alertBuilder.setPositiveButton(android.R.string.yes){dialog, which ->
-                    SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
+
                     this.deleteAccount()
                 }
                 alertBuilder.setNegativeButton(android.R.string.no){dialog, which ->
@@ -79,9 +84,10 @@ class HomeActivity : AppCompatActivity() {
                 }
                 alertBuilder.show()
             }
-            R.id.action_sign_out->{
+            R.id.action_sign_out ->{
                 this.finishAffinity()
                 val signInIntent = Intent(this, SignInActivity::class.java)
+                startActivity(signInIntent)
             }
         }
             return super.onOptionsItemSelected(item)

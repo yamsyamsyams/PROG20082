@@ -1,14 +1,12 @@
 package com.example.paypark.views
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.example.paypark.HomeActivity
 import com.example.paypark.R
 import com.example.paypark.managers.SharedPreferencesManager
 import com.example.paypark.utils.DataValidations
@@ -98,13 +96,14 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkRemember(){
+        SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
         if(swtRememberMe.isChecked){
             // save the credentials in shared preferences
-            SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
             SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
         }
         else{
-            SharedPreferencesManager.remove(SharedPreferencesManager.EMAIL)
+            // remove the credentials in shared preferences
+//            SharedPreferencesManager.remove(SharedPreferencesManager.EMAIL)
             SharedPreferencesManager.remove(SharedPreferencesManager.PASSWORD)
         }
     }
