@@ -41,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
 //        }
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
@@ -63,32 +64,38 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.action_view_profile ->{
-//                navController.navigate(R.id.action_nav_home_to_profileFragment)
+        when(item.itemId){
+            R.id.action_view_profile -> {
+//                navController.navigate(R.id.action_nav_home_to_nav_profile)
+
                 navController.navigate(R.id.nav_profile)
             }
-            R.id.action_delete_account ->{
+            R.id.action_delete_account -> {
                 val alertBuilder = AlertDialog.Builder(this)
 
                 alertBuilder.setTitle("Sad to see you go")
                 alertBuilder.setMessage("Are you sure you want to delete your account?")
-                alertBuilder.setPositiveButton(android.R.string.yes){dialog, which ->
+                alertBuilder.setPositiveButton(android.R.string.yes){ dialog, which ->
 
                     this.deleteAccount()
                 }
-                alertBuilder.setNegativeButton(android.R.string.no){dialog, which ->
+
+                alertBuilder.setNegativeButton(android.R.string.no){ dialog, which ->
                     Toast.makeText(this, "Thank you for staying with us.", Toast.LENGTH_LONG).show()
                 }
+
+//                alertBuilder.setNeutralButton(){}
+
                 alertBuilder.show()
             }
-            R.id.action_sign_out ->{
+            R.id.action_sign_out -> {
                 this.finishAffinity()
                 val signInIntent = Intent(this, SignInActivity::class.java)
                 startActivity(signInIntent)
             }
         }
-            return super.onOptionsItemSelected(item)
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun deleteAccount(){

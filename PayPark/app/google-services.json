@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "244442987837",
+    "firebase_url": "https://payparkf20jameson.firebaseio.com",
+    "project_id": "payparkf20jameson",
+    "storage_bucket": "payparkf20jameson.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244442987837:android:c9a645ced49e36d791d954",
+        "android_client_info": {
+          "package_name": "com.example.paypark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244442987837-1c3kcd2cc1fgtlorifue9rnmfebmg0ba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjAHpEE942FQsgnda12wkOQ0D2BCnM514"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244442987837-1c3kcd2cc1fgtlorifue9rnmfebmg0ba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

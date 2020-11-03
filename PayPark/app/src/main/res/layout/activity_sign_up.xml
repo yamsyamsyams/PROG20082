@@ -13,13 +13,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/name"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <EditText
         android:id="@+id/edtEmail"
         android:layout_width="0dp"
@@ -27,12 +26,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:inputType="textEmailAddress"
         android:hint="@string/email"
-        app:layout_constraintStart_toStartOf="parent"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtName"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtName" />
+
     <TextView
         android:id="@+id/tvGender"
         android:layout_width="0dp"
@@ -46,6 +45,7 @@
         android:text="@string/gender"
         android:textSize="18sp"
         />
+
     <Spinner
         android:id="@+id/spnGender"
         android:layout_width="0dp"
@@ -57,6 +57,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         />
+
     <EditText
         android:id="@+id/edtPhoneNumber"
         android:layout_width="0dp"
@@ -64,26 +65,26 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:inputType="number"
         android:hint="@string/phone"
-        app:layout_constraintStart_toStartOf="parent"
+        android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spnGender"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnGender" />
+
     <EditText
-        android:id="@+id/edtPlateNumber"
+        android:id="@+id/edtCarPlateNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:inputType="textCapCharacters"
-        android:hint="@string/plate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtPhoneNumber"
+        android:hint="@string/car_plate_num"
+        android:inputType="textNoSuggestions"
         android:maxLength="8"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtPhoneNumber" />
+
     <EditText
         android:id="@+id/edtPassword"
         android:layout_width="0dp"
@@ -91,12 +92,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:inputType="textPassword"
         android:hint="@string/password"
-        app:layout_constraintStart_toStartOf="parent"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtPlateNumber"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtCarPlateNumber" />
+
     <EditText
         android:id="@+id/edtConfirmPassword"
         android:layout_width="0dp"
@@ -104,64 +105,65 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:hint="@string/confirm_password"
         android:inputType="textPassword"
-        android:hint="@string/confirmPassword"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtPassword"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtPassword" />
+
     <TextView
-        android:id="@+id/txtPayment"
+        android:id="@+id/txtPaymentInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/payment_info"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtConfirmPassword"
-        android:text="@string/paymentInfo"
-        android:textSize="50px"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtConfirmPassword"/>
+
     <EditText
-        android:id="@+id/edtCardNumber"
+        android:id="@+id/edtCreditCardNum"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:inputType="number"
+        android:hint="@string/card_number"
+        android:inputType = "number"
         android:maxLength="16"
-        android:hint="@string/cardNumber"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtPayment"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPaymentInfo" />
+
     <EditText
-        android:id="@+id/edtCardName"
+        android:id="@+id/edtNameOnCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:hint="@string/name_on_card"
         android:inputType="textPersonName"
-        android:hint="@string/nameCard"
-        app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtCardNumber"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtCreditCardNum" />
+
     <EditText
-        android:id="@+id/edtCVV"
+        android:id="@+id/edtCvv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:inputType="number"
         android:hint="@string/cvv"
+        android:inputType="number"
+        android:maxLength="3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtCardName"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/edtNameOnCard" />
+
     <EditText
         android:id="@+id/edtExpiry"
         android:layout_width="0dp"
@@ -169,26 +171,25 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:hint="@string/expiry_placeholder"
         android:inputType="date"
-        android:hint="@string/expiry"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/edtCVV"
-        app:layout_constraintTop_toBottomOf="@id/edtCardName"
-        android:textAlignment="center"
-        />
+        app:layout_constraintStart_toEndOf="@+id/edtCvv"
+        app:layout_constraintTop_toBottomOf="@+id/edtNameOnCard" />
+
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtExpiry"
-        app:layout_constraintVertical_bias="1.0"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/edtExpiry"
+        app:layout_constraintVertical_bias="1.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

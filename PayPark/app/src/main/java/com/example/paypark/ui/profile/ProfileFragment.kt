@@ -20,7 +20,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -31,7 +31,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProfileFragment : Fragment(), View.OnClickListener {
-
+    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -45,11 +45,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     lateinit var btnSave: Button
     lateinit var fabEditProfile: FloatingActionButton
 
-
     lateinit var userViewModel: UserViewModel
     lateinit var existingUser: User
     var currentUserEmail = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
-   // var currentUserEmail = "jh3@jh.com"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +55,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
         userViewModel = UserViewModel(this.requireActivity().application)
 
         this.populateProfile()
+
     }
 
     override fun onCreateView(
@@ -86,7 +86,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         fabEditProfile = root.fabEditProfile
 
         this.disableEdit()
-       // this.populateProfile()
 
         return root
     }
@@ -132,19 +131,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     fun populateProfile(){
-//        Log.e("ProfileFragment", "populateProfile() executing")
-
         if (currentUserEmail != null){
-            Log.e("ProfileFragment", "currentUserEmail " + currentUserEmail)
             userViewModel.getUserByEmail(currentUserEmail!!)?.observe(this.requireActivity(), {matchedUser ->
-
-//                Log.e("Profile Fragment", "Matched user : " + matchedUser.phoneNumber)
 
                 if (matchedUser != null) {
 
                     this.existingUser = matchedUser
 
-//                    Log.d("Profile Fragment", "Matched user : " + matchedUser.toString())
+                    Log.d("Profile Fragment", "Matched user : " + matchedUser.toString())
 
                     edtName.setText(matchedUser.name)
                     edtPhoneNumber.setText(matchedUser.phoneNumber)
@@ -201,15 +195,15 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         val day = calendar[Calendar.DAY_OF_MONTH]
 
         val datePickerDialog = DatePickerDialog(this.requireActivity(),
-            DatePickerDialog.OnDateSetListener{ view, year, month, dayOfMonth ->
-                val sdf = SimpleDateFormat("MM/YY")
-                calendar.set(year, month, dayOfMonth)
+        DatePickerDialog.OnDateSetListener{ view, year, month, dayOfMonth ->
+            val sdf = SimpleDateFormat("MM/YY")
+            calendar.set(year, month, dayOfMonth)
 
-                val expiryDate = calendar.time
-                edtExpiry.setText(sdf.format(expiryDate).toString())
+            val expiryDate = calendar.time
+            edtExpiry.setText(sdf.format(expiryDate).toString())
 
-                existingUser.expiryDate = expiryDate
-            }, year, month, day)
+            existingUser.expiryDate = expiryDate
+        }, year, month, day)
 
         datePickerDialog.datePicker.minDate = Date().time
         datePickerDialog.show()

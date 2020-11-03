@@ -25,6 +25,7 @@ class DataValidations {
         }catch(ex: NoSuchAlgorithmException){
             Log.e("Data Validations", ex.localizedMessage)
         }
+
         return ""
     }
 }

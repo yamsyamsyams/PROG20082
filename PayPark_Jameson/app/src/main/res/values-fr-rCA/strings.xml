@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PayPark</string>
+
+    <string name="sign_in">Se connecter</string>
+    <string name="sign_up">S \'inscrire</string>
+    <string name="save">Save</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="forgot_password">Mot de passe oublie?</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="create_account">Creer un compte</string>
+
+    <string name="name">Name</string>
+    <string name="nameCard">Name On Card</string>
+    <string name="phone">Phone Number</string>
+    <string name="plate">Car Plate Number</string>
+    <string name="paymentInfo">Payment Information</string>
+    <string name="cardNumber">Card Number</string>
+    <string name="cvv">CVV</string>
+    <string name="expiry">MM/YY</string>
+    <string name="gender">Gender</string>
+
+    <string name="error_empty_password">Le mot de passe ne peut pas être vide</string>
+
+    <string-array name="gender_array">
+        <item>Female</item>
+        <item>Male</item>
+        <item>No Disclosure</item>
+    </string-array>
+</resources>

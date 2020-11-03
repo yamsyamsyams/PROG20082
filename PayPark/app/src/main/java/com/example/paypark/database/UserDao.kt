@@ -16,7 +16,6 @@ interface UserDao {
     @Delete
     fun deleteUser(user: User)
 
-    // customized query
     @Query("DELETE FROM Users WHERE email LIKE :email")
     fun deleteUserByEmail(email: String)
 

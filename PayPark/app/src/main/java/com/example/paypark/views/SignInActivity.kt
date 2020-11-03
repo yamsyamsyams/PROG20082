@@ -37,7 +37,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun fetchPreferences(){
         edtEmail.setText(SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, ""))
-        edtPassword.setText(SharedPreferencesManager.read(SharedPreferencesManager.PASSWORD, ""))
+        edtPassword.setText(SharedPreferencesManager.read(SharedPreferencesManager.PASSWORD,""))
     }
 
     override fun onClick(v: View?) {
@@ -73,36 +73,39 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun validateUser(){
-        var email = edtEmail.text.toString()
-        var password = DataValidations().encryptPassword(edtPassword.text.toString())
 
-        userViewModel.getUserByLoginInfo(email, password)?.observe(this@SignInActivity, { matchedUser ->
-            if(matchedUser != null){ // will be using it instead of matchedUser if we don't change
-                // valid login
+//        if (edtEmail.text.toString().equals("test@sh.ca")
+//            && edtPassword.text.toString().equals("test123")){
+//
+//            this.goToMain()
+//        }
+
+        val email = edtEmail.text.toString()
+        val password = DataValidations().encryptPassword(edtPassword.text.toString())
+
+        userViewModel.getUserByLoginInfo(email, password)?.observe(this@SignInActivity, {matchedUser ->
+            if ( matchedUser != null){
+                //valid login
                 this.checkRemember()
+
                 this@SignInActivity.finishAndRemoveTask()
                 this.goToMain()
-            }
-            else{
-                // invalid login
-                Toast.makeText(this, "Incorrect Login/Password. Try again!", Toast.LENGTH_LONG).show() // Toast is a small message display
+            }else{
+                //invalid login
+                Toast.makeText(this, "Incorrect Login/Password. Try again!", Toast.LENGTH_LONG).show()
             }
         })
-        /* test method, hard coded we should check from DB
-        if (edtEmail.text.toString().equals("test@sh.ca")
-            && edtPassword.text.toString().equals("test123")){
-            this.goToMain()
-        }*/
+
     }
 
     private fun checkRemember(){
         SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
-        if(swtRememberMe.isChecked){
-            // save the credentials in shared preferences
+
+        if (swtRemember.isChecked){
+            //save the credentials in shared preferences
             SharedPreferencesManager.write(SharedPreferencesManager.PASSWORD, edtPassword.text.toString())
-        }
-        else{
-            // remove the credentials in shared preferences
+        }else{
+            //remove the credentials from shared preferences
 //            SharedPreferencesManager.remove(SharedPreferencesManager.EMAIL)
             SharedPreferencesManager.remove(SharedPreferencesManager.PASSWORD)
         }
@@ -127,18 +130,20 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun fetchAllUsers(){
+
         userViewModel.allUsers.observe(this@SignInActivity, {
             for(user in it){
                 Log.d(TAG, user.toString())
             }
-            // show the data in UI
-            // call user defined methods
+
+            //show the data in UI
+            //call user defined methods
         })
 
-        /*userViewModel.allUsers.observe(this@SignInActivity, { users ->
-            for(user in users){
-                Log.d(TAG, user.toString())
-            }
-        })*/
+//        userViewModel.allUsers.observe(this@SignInActivity, { userList ->
+//            for(user in userList){
+//                Log.d(TAG, user.toString())
+//            }
+//        })
     }
 }

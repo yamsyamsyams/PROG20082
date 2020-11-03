@@ -37,6 +37,9 @@ abstract class PayParkDatabase : RoomDatabase(){
                     .fallbackToDestructiveMigration()
                     .build()
 
+                //fallbackToDestructiveMigration() - destroy the older version of DB and
+                // recreate DB with new config provided through model class
+                //mkae sure that after significant changes in model class, you have updated the version number of DB
                 INSTANCE = instance
                 return instance
             }

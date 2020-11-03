@@ -3,6 +3,7 @@ package com.example.paypark.views
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -72,20 +73,20 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         edtName.setAutofillHints(View.AUTOFILL_HINT_NAME)
         edtEmail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS)
 //        edtCreditCardNum.setAutofillHints() //avoid for security reasons
-        edtCardName.setAutofillHints(View.AUTOFILL_HINT_NAME)
+        edtNameOnCard.setAutofillHints(View.AUTOFILL_HINT_NAME)
         edtPhoneNumber.setAutofillHints(View.AUTOFILL_HINT_PHONE)
 
         //the hardcoded values for each of these inputs
         // are just used to save time when we are testing this activity
-        edtName.setText("James Hoang")
+        edtName.setText("Jigisha Patel")
         edtPhoneNumber.setText("1234567890")
-        edtPassword.setText("123")
-        edtConfirmPassword.setText("123")
-        edtCVV.setText("123")
-        edtPlateNumber.setText("abcd123")
-        edtEmail.setText("jh@jh.com")
-        edtCardName.setText("JH")
-        edtCardNumber.setText("1234123412341234")
+        edtPassword.setText("jk123")
+        edtConfirmPassword.setText("jk123")
+        edtCvv.setText("123")
+        edtCarPlateNumber.setText("abcd123")
+        edtEmail.setText("jk@jk.com")
+        edtNameOnCard.setText("JK")
+        edtCreditCardNum.setText("1234123412341234")
     }
 
     override fun onClick(v: View?) {
@@ -96,7 +97,9 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
                     if (this.validateData()) {
                         this.fetchData()
                         this.saveUserToDB()
+
                         SharedPreferencesManager.write(SharedPreferencesManager.EMAIL, edtEmail.text.toString())
+
                         this.goToMain()
                     }
                 }
@@ -125,12 +128,12 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         user.name = edtName.text.toString()
         user.email = edtEmail.text.toString()
         user.phoneNumber = edtPhoneNumber.text.toString()
-        user.carPlate = edtPlateNumber.text.toString()
-        user.creditCardNumber = edtCardNumber.text.toString()
-        user.nameOnCard = edtCardName.text.toString()
+        user.carPlate = edtCarPlateNumber.text.toString()
+        user.creditCardNumber = edtCreditCardNum.text.toString()
+        user.nameOnCard = edtNameOnCard.text.toString()
 
-        if (edtCVV.text.toString().isNotEmpty()) {
-            user.cvv = edtCVV.text.toString().toInt()
+        if (edtCvv.text.toString().isNotEmpty()) {
+            user.cvv = edtCvv.text.toString().toInt()
         }
         user.gender = selectedGender
         user.password = DataValidations().encryptPassword(edtPassword.text.toString())
@@ -140,8 +143,11 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
     fun goToMain(){
         //open MainActivity and pass the user object
-        val mainIntent = Intent(this, MainActivity::class.java)
-        startActivity(mainIntent)
+//        val mainIntent = Intent(this, MainActivity::class.java)
+//        startActivity(mainIntent)
+
+        val homeIntent = Intent(this, HomeActivity::class.java)
+        startActivity(homeIntent)
 
         //remove the SignUpActivity from teh activity stack
         this@SignUpActivity.finishAffinity()
@@ -187,7 +193,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
     class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener{
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-            //use the current date as the default date for the date picker
+        //use the current date as the default date for the date picker
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
@@ -198,7 +204,7 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-            //for the operation to be performed on the date selected by the user
+            //TODO for the operation to be performed on the date selected by the user
 
             val calendar = Calendar.getInstance()
             calendar.set(year, month, dayOfMonth)

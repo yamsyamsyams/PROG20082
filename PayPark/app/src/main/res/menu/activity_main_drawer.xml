@@ -8,18 +8,18 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_list"
             android:title="@string/menu_home" />
+
         <item android:title="Support">
             <menu>
                 <item
                     android:id="@+id/nav_support"
                     android:icon="@android:drawable/ic_menu_call"
-                    android:title="@string/menu_gallery" />
+                    android:title="@string/menu_support" />
                 <item
                     android:id="@+id/nav_user_manual"
                     android:icon="@android:drawable/ic_menu_help"
-                    android:title="@string/menu_slideshow" />
+                    android:title="@string/menu_user_manual" />
             </menu>
         </item>
-
     </group>
 </menu>

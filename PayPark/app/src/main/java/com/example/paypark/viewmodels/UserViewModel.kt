@@ -1,5 +1,7 @@
 package com.example.paypark.viewmodels
 
+//https://github.com/ProfJK/PayPark-Android-F20.git
+
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -24,6 +26,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         userRepo = UserRepository(userDao)
 
         allUsers = userRepo.allUsers
+
         matchedUser = MutableLiveData()
     }
 
@@ -46,7 +49,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         userRepo.deleteUserByEmail(email)
     }
 
-    private fun getUserByLoginInfoCoroutine(email: String, password: String) = viewModelScope.launch(Dispatchers.IO){
+    private fun getUserByLoginInfoCoroutine(email: String, password: String)  = viewModelScope.launch(Dispatchers.IO) {
         val user : User? = userRepo.getUserByLoginInfo(email, password)
         matchedUser?.postValue(user)
     }
@@ -57,15 +60,34 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         return matchedUser
     }
 
-    private fun getUserByEmailCoroutine(email: String) = viewModelScope.launch(Dispatchers.IO){
+    private  fun getUserByEmailCoroutine(email: String) = viewModelScope.launch (Dispatchers.IO){
         val user: User? = userRepo.getUserByEmail(email)
         matchedUser?.postValue(user)
     }
 
     fun getUserByEmail(email: String) : MutableLiveData<User>?{
         getUserByEmailCoroutine(email)
+
         Log.d("UserViewModel : ", matchedUser.toString())
+
         return matchedUser
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
