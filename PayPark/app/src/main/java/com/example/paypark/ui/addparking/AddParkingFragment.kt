@@ -1,6 +1,7 @@
 package com.example.paypark.ui.addparking
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -136,21 +137,36 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
         val month=calendar[Calendar.MONTH]
         val day=calendar[Calendar.DAY_OF_MONTH]
 
+        val hour = calendar[Calendar.HOUR_OF_DAY]
+        val minute = calendar[Calendar.DAY_OF_MONTH]
+
+
         val datePickerDialog = DatePickerDialog(
             this.requireActivity(),
             DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                calendar.set(year, month, dayOfMonth)
+//                calendar.set(year, month, dayOfMonth)
 
                 //TO-DO TimePickerDialog()
+                TimePickerDialog(
+                        this.requireActivity(),
+                        TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                            calendar.set(year, month, dayOfMonth, hourOfDay, minute)
 
-                val parkingDate = calendar.time
+                            val parkingDate = calendar.time
 
 //                https://developer.android.com/reference/java/text/DateFormat
-                val df: DateFormat =
-                    DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
-                edtParkingDate.setText(df.format(parkingDate).toString())
-
-            }, year, month, day
+                            val df: DateFormat =
+                                    DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
+                            edtParkingDate.setText(df.format(parkingDate).toString())
+                        },
+                        hour,
+                        minute,
+                        false
+                ).show()
+            },
+                year,
+                month,
+                day
         )
         datePickerDialog.show()
     }
