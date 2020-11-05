@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.paypark.R
 import com.example.paypark.managers.SharedPreferencesManager
 import com.example.paypark.model.Parking
+import com.example.paypark.viewmodels.ParkingViewModel
 import java.text.DateFormat
 import java.util.*
 
@@ -99,7 +100,6 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
                 }
 
         var newParking = Parking()
-
     }
 
     override fun onClick(v: View?) {
@@ -118,6 +118,9 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
                     newParking.buildingCode = edtBuildingCode.text.toString().toLong()
 
                     Log.e(TAG, "New Parking : " + newParking.toString())
+
+                    // save to Firestore
+                    ParkingViewModel().addParking(newParking)
 
                     findNavController().navigateUp()
                 }
@@ -185,7 +188,6 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
                             minute,
                             false
                     ).show()
-
 
                 }, year, month, day
         )

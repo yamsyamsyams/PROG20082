@@ -1,6 +1,7 @@
 package com.example.paypark.database
 
 import com.example.paypark.model.Parking
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ParkingRepository {
