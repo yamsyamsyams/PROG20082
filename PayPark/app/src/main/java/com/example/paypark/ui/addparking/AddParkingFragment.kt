@@ -3,12 +3,16 @@ package com.example.paypark.ui.addparking
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.fragment.findNavController
 import com.example.paypark.R
+import com.example.paypark.managers.SharedPreferencesManager
+import com.example.paypark.model.Parking
 import java.text.DateFormat
 import java.util.*
 
@@ -45,11 +49,14 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
+        newParking.email = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "").toString()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_add_parking, container, false)
@@ -84,12 +91,15 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            AddParkingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                AddParkingFragment().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_PARAM1, param1)
+                        putString(ARG_PARAM2, param2)
+                    }
                 }
-            }
+
+        var newParking = Parking()
+
     }
 
     override fun onClick(v: View?) {
@@ -100,6 +110,16 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
                 }
                 R.id.btnSaveParking -> {
                     //TO-DO retrieve data and save parking to database
+
+                    newParking.unitNumber = edtUnitNumber.text.toString()
+                    newParking.carPlate = edtCarPlate.text.toString()
+                    newParking.parkingLocation = edtParkingLocation.text.toString()
+                    newParking.duration = selectedDuration
+                    newParking.buildingCode = edtBuildingCode.text.toString().toLong()
+
+                    Log.e(TAG, "New Parking : " + newParking.toString())
+
+                    findNavController().navigateUp()
                 }
             }
         }
@@ -107,9 +127,9 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
 
     private fun setUpSpinner(){
         val durationAdapter = ArrayAdapter(
-            this.requireActivity(),
-            android.R.layout.simple_spinner_item,
-            resources.getStringArray(R.array.duration_array)
+                this.requireActivity(),
+                android.R.layout.simple_spinner_item,
+                resources.getStringArray(R.array.duration_array)
         )
 
         spnDuration.adapter = durationAdapter
@@ -117,10 +137,10 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
 
         spnDuration.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
             ) {
                 selectedDuration = durationValues[position]
             }
@@ -138,35 +158,36 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
         val day=calendar[Calendar.DAY_OF_MONTH]
 
         val hour = calendar[Calendar.HOUR_OF_DAY]
-        val minute = calendar[Calendar.DAY_OF_MONTH]
-
+        val minute = calendar[Calendar.MINUTE]
 
         val datePickerDialog = DatePickerDialog(
-            this.requireActivity(),
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                this.requireActivity(),
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
 //                calendar.set(year, month, dayOfMonth)
 
-                //TO-DO TimePickerDialog()
-                TimePickerDialog(
-                        this.requireActivity(),
-                        TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                            calendar.set(year, month, dayOfMonth, hourOfDay, minute)
+                    //TO-DO TimePickerDialog()
 
-                            val parkingDate = calendar.time
+                    TimePickerDialog(
+                            this.requireActivity(),
+                            TimePickerDialog.OnTimeSetListener{ view, hourOfDay, minute ->
+                                calendar.set(year, month, dayOfMonth, hourOfDay, minute)
+
+                                val parkingDate = calendar.time
+
+                                newParking.parkingDate = parkingDate
 
 //                https://developer.android.com/reference/java/text/DateFormat
-                            val df: DateFormat =
-                                    DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
-                            edtParkingDate.setText(df.format(parkingDate).toString())
-                        },
-                        hour,
-                        minute,
-                        false
-                ).show()
-            },
-                year,
-                month,
-                day
+                                val df: DateFormat =
+                                        DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
+                                edtParkingDate.setText(df.format(parkingDate).toString())
+                            },
+                            hour,
+                            minute,
+                            false
+                    ).show()
+
+
+                }, year, month, day
         )
         datePickerDialog.show()
     }
@@ -175,7 +196,7 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
         val calendar = Calendar.getInstance()
 
         val df: DateFormat =
-            DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
+                DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
         edtParkingDate.setText(df.format(calendar.time).toString())
     }
 }
