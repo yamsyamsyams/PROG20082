@@ -10,11 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.paypark.R
+import com.example.paypark.model.Parking
+import com.example.paypark.viewmodels.ParkingViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
 
     private val TAG = this.toString()
+    private lateinit var parkingViewModel : ParkingViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,5 +32,17 @@ class HomeFragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+
+        parkingViewModel = ParkingViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        parkingViewModel.getAllParkings()
     }
 }

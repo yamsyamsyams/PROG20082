@@ -122,6 +122,8 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
                     // save to Firestore
                     ParkingViewModel().addParking(newParking)
 
+                    //this.saveToDB
+
                     findNavController().navigateUp()
                 }
             }
