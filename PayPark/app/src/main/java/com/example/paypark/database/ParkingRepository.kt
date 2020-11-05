@@ -14,7 +14,8 @@ class ParkingRepository {
     fun addParking(parking : Parking){
         db.collection(COLLECTION_NAME)
                 .document(parking.id.toString())
-                .set(parking).addOnSuccessListener { Log.e(TAG, "Document successfully added") }
+                .set(parking)
+                .addOnSuccessListener { Log.e(TAG, "Document successfully added") }
                 .addOnFailureListener{error -> Log.e(TAG, "Unable to add a document" + error.localizedMessage)}
 
         Log.e(TAG, "addParking : " + parking.toString())
@@ -30,7 +31,11 @@ class ParkingRepository {
 
     }
 
-    fun deleteParking(){
-
+    fun deleteParking(parkingId : String){
+        db.collection(COLLECTION_NAME)
+                .document(parkingId)
+                .delete()
+                .addOnSuccessListener { Log.e(TAG, "Document successfully deleted") }
+                .addOnFailureListener{error -> Log.e(TAG, "Unable to delete a document" + error.localizedMessage)}
     }
 }

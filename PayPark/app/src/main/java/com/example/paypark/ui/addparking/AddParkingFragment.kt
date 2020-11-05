@@ -51,7 +51,6 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
             param2 = it.getString(ARG_PARAM2)
         }
 
-
         newParking.email = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "").toString()
     }
 
@@ -120,14 +119,18 @@ class AddParkingFragment : Fragment(), View.OnClickListener {
                     Log.e(TAG, "New Parking : " + newParking.toString())
 
                     // save to Firestore
-                    ParkingViewModel().addParking(newParking)
+//                    ParkingViewModel().addParking(newParking)
 
-                    //this.saveToDB
+
+                    this.saveToDB()
 
                     findNavController().navigateUp()
                 }
             }
         }
+    }
+    private fun saveToDB(){
+        ParkingViewModel().addParking(newParking)
     }
 
     private fun setUpSpinner(){
