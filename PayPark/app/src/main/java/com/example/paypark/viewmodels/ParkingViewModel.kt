@@ -14,7 +14,7 @@ class ParkingViewModel : ViewModel() {
     private val parkingRepository = ParkingRepository()
 
     fun addParking(parking: Parking) {
-        parkingRepository.addParking(parking)
+    parkingRepository.addParking(parking)
 
         Log.e("Parking View Model", "addParking : " + parking.toString())
     }
