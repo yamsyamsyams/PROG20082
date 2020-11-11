@@ -43,10 +43,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    // to access the location of the device
+    //to access the location of the device
     implementation 'com.google.android.gms:play-services-location:17.1.0'
 
-    // to display the maps
+    //to display the maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 }
