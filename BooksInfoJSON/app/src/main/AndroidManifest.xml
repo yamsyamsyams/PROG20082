@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.profjk.booksinfojson">
 
+<!--    this line needs to be added to new projects-->
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -11,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BooksInfoJSON"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"> <!--This is a required line too-->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
