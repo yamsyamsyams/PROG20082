@@ -25,8 +25,11 @@
         <action
             android:id="@+id/action_nav_home_to_add_parking_fragment"
             app:destination="@id/addParkingFragment"
-            app:popUpTo="@id/nav_home"
-             />
+            app:popUpTo="@id/nav_home"/>
+        <action
+            android:id="@+id/action_nav_home_to_fragment_camera_x"
+            app:destination="@+id/fragment_camera_x"
+            app:popUpTo="@layout/activity_home"/>
 
     </fragment>
 
@@ -54,4 +57,11 @@
         android:label="Add Parking"
         tools:layout="@layout/fragment_add_parking"
         />
+
+    <fragment
+        android:id="@+id/fragment_camera_x"
+        android:name="com.example.paypark.ui.camera.CameraXFragment"
+        android:label="Take picture"
+        tools:layout="@layout/fragment_camera_x"/>
+
 </navigation>

@@ -68,7 +68,7 @@ class LocationManager (var context: Context){
 
     private fun checkPermissions(){
         locationPermissionsGranted = (ContextCompat.checkSelfPermission(this.context.applicationContext,
-            android.Manifest.permission.ACCESS_FINE_LOCATION) ==
+            Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED)
 
         Log.e(TAG, "locationPermissionsGranted " + locationPermissionsGranted.toString())
