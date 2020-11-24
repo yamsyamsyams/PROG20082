@@ -1,7 +1,9 @@
 package com.example.paypark.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -36,6 +38,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var tvEmail: TextView
     private lateinit var imgProfilePic: ImageView
     private lateinit var drawerLayout: DrawerLayout
+    private val REQUEST_GALLERY_PICTURE = 172
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +70,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val headerLayout : View = navView.getHeaderView(0)
+        val headerLayout: View = navView.getHeaderView(0)
         tvEmail = headerLayout.findViewById(R.id.tvEmail)
         tvName = headerLayout.findViewById(R.id.tvName)
         imgProfilePic = headerLayout.findViewById(R.id.imgProfilePic)
@@ -81,7 +84,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.action_view_profile -> {
 //                navController.navigate(R.id.action_nav_home_to_nav_profile)
 
@@ -92,12 +95,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
                 alertBuilder.setTitle("Sad to see you go")
                 alertBuilder.setMessage("Are you sure you want to delete your account?")
-                alertBuilder.setPositiveButton(android.R.string.yes){ dialog, which ->
+                alertBuilder.setPositiveButton(android.R.string.yes) { dialog, which ->
 
                     this.deleteAccount()
                 }
 
-                alertBuilder.setNegativeButton(android.R.string.no){ dialog, which ->
+                alertBuilder.setNegativeButton(android.R.string.no) { dialog, which ->
                     Toast.makeText(this, "Thank you for staying with us.", Toast.LENGTH_LONG).show()
                 }
 
@@ -115,10 +118,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun deleteAccount(){
+    private fun deleteAccount() {
         val email = SharedPreferencesManager.read(SharedPreferencesManager.EMAIL, "")
         if (email != null) {
-            userViewModel.deleteUserByEmail(email).apply {  }
+            userViewModel.deleteUserByEmail(email).apply { }
         }
 
         this.finishAffinity()
@@ -135,29 +138,45 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (v != null) {
-            when(v.id){
+            when (v.id) {
                 R.id.imgProfilePic -> {
                     val actionItems = arrayOf("Take a new picture", "Choose from gallery", "Cancel")
                     val alertBuilder = AlertDialog.Builder(this)
                     alertBuilder.setTitle("Select profile picture")
-                    alertBuilder.setItems(actionItems){
-                        dialog, index ->
-                        if(actionItems.get(index).equals("Take a new picture")){
+                    alertBuilder.setItems(actionItems) { dialog, index ->
+                        if (actionItems.get(index).equals("Take a new picture")) {
                             Log.e("HomeActivity", "Taking new picture")
                             this.navController.navigate(R.id.action_nav_home_to_fragment_camera_x)
 
                             // hide the drawer when we click on take a picture
                             this.drawerLayout.closeDrawer(Gravity.LEFT, true)
-                        }
-                        else if(actionItems.get(index).equals("Choose from gallery")){
-                            Toast.makeText(this, "Choosing from gallery", Toast.LENGTH_SHORT).show()
-                        }
-                        else if(actionItems.get(index).equals("Cancel")){
+                        } else if (actionItems.get(index).equals("Choose from gallery")) {
+//                            Toast.makeText(this, "Choosing from gallery", Toast.LENGTH_SHORT).show()
+                            this.selectFromGallery()
+                        } else if (actionItems.get(index).equals("Cancel")) {
                             dialog.dismiss()
                         }
                     }
                     alertBuilder.show()
                 }
+            }
+        }
+    }
+
+    private fun selectFromGallery() {
+        val pickPhoto = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        ).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        startActivityForResult(pickPhoto, REQUEST_GALLERY_PICTURE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == this.REQUEST_GALLERY_PICTURE) {
+                this.imgProfilePic.setImageURI(data?.data)
             }
         }
     }
