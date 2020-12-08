@@ -78,14 +78,14 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
         //the hardcoded values for each of these inputs
         // are just used to save time when we are testing this activity
-        edtName.setText("Jigisha Patel")
+        edtName.setText("Jam Hoan")
         edtPhoneNumber.setText("1234567890")
-        edtPassword.setText("jk123")
-        edtConfirmPassword.setText("jk123")
+        edtPassword.setText("jh123")
+        edtConfirmPassword.setText("jh123")
         edtCvv.setText("123")
         edtCarPlateNumber.setText("abcd123")
-        edtEmail.setText("jk@jk.com")
-        edtNameOnCard.setText("JK")
+        edtEmail.setText("jh@jh.com")
+        edtNameOnCard.setText("JH")
         edtCreditCardNum.setText("1234123412341234")
     }
 

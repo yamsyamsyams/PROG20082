@@ -1,12 +1,12 @@
 package com.example.paypark.ui.home
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -20,7 +20,7 @@ import com.example.paypark.model.Parking
 import com.example.paypark.viewmodels.ParkingViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class HomeFragment : Fragment(), OnItemClickListener {
+class HomeFragment : androidx.fragment.app.Fragment(), OnItemClickListener {
 
     private val TAG = this.toString()
     private lateinit var parkingViewModel: ParkingViewModel
