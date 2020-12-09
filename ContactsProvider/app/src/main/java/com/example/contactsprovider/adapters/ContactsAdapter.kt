@@ -25,6 +25,7 @@ class ContactsAdapter(
         parent: ViewGroup,
         viewType: Int
     ): ContactsAdapter.ContactsViewHolder {
+
         val view = LayoutInflater.from(context).inflate(R.layout.contact_list_item, null)
         return ContactsViewHolder(view)
     }
@@ -37,7 +38,7 @@ class ContactsAdapter(
         holder.bind(contactList[position])
     }
 
-    inner class ContactsViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ContactsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var tvName : TextView = itemView.tvName
         var tvEmail : TextView = itemView.tvEmail
         var tvPhone : TextView = itemView.tvPhone
